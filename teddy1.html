@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Teddy Love</title>
+<style>
+  body {
+    margin:0; 
+    background:#fbe9e7; 
+    font-family:"Comic Sans MS",cursive; 
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    height:100vh;
+  }
+
+  .container {
+    text-align:center;
+    position:relative;
+  }
+
+  svg {
+    width:300px;
+    height:auto;
+    transition: transform 0.4s ease;
+  }
+
+  .chart {
+    fill:#fff8dc;
+    stroke:#a5743a;
+    stroke-width:4;
+  }
+  .chart-text {
+    font-size:16px;
+    fill:#5a3d2a;
+    font-weight:bold;
+    text-anchor:middle;
+  }
+
+  .btns {
+    margin-top:15px;
+  }
+  button {
+    font-size:16px;
+    font-weight:bold;
+    padding:8px 18px;
+    margin:6px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.2s;
+  }
+  .yes { background:#ff6b81; color:white; }
+  .no { background:#444; color:white; }
+  button:hover { transform:scale(1.1); }
+
+  .message {
+    margin-top:20px;
+    font-size:20px;
+    font-weight:bold;
+    color:#c0392b;
+    opacity:0;
+    transition: opacity 0.4s ease;
+  }
+
+  .dance {
+    animation: dance 0.6s infinite alternate ease-in-out;
+  }
+  @keyframes dance {
+    from { transform: rotate(-6deg) translateX(-8px); }
+    to   { transform: rotate(6deg) translateX(8px); }
+  }
+
+  .flower {
+    position:absolute;
+    bottom:80px;
+    left:50%;
+    transform:translateX(-50%) scale(0);
+    font-size:60px;
+    animation: giveFlower 1s forwards;
+  }
+  @keyframes giveFlower {
+    0% { transform:translateX(-50%) scale(0); opacity:0; }
+    100% { transform:translateX(-50%) scale(1); opacity:1; }
+  }
+
+  .love-text {
+    position:absolute;
+    top:-60px;
+    left:50%;
+    transform:translateX(-50%) scale(0);
+    font-size:40px;
+    font-weight:bold;
+    color:#e91e63;
+    text-shadow:2px 2px 4px rgba(0,0,0,0.2);
+    animation: showLove 1s forwards;
+  }
+  @keyframes showLove {
+    0% { transform:translateX(-50%) scale(0); opacity:0; }
+    60% { transform:translateX(-50%) scale(1.3); opacity:1; }
+    100% { transform:translateX(-50%) scale(1); opacity:1; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <!-- Teddy with chart -->
+    <svg id="teddy" viewBox="0 0 500 500">
+      <!-- body -->
+      <ellipse cx="250" cy="320" rx="120" ry="100" fill="#c1885a"/>
+      <ellipse cx="250" cy="315" rx="100" ry="82" fill="#d9a066"/>
+      <!-- belly -->
+      <ellipse cx="250" cy="330" rx="60" ry="48" fill="#f7d9b3"/>
+      <!-- head -->
+      <ellipse cx="250" cy="150" rx="95" ry="88" fill="#d9a066"/>
+      <!-- ears -->
+      <circle cx="170" cy="110" r="32" fill="#c1885a"/>
+      <circle cx="330" cy="110" r="32" fill="#c1885a"/>
+      <circle cx="170" cy="110" r="18" fill="#f7d9b3"/>
+      <circle cx="330" cy="110" r="18" fill="#f7d9b3"/>
+      <!-- eyes -->
+      <circle cx="220" cy="150" r="10" fill="#222"/>
+      <circle cx="280" cy="150" r="10" fill="#222"/>
+      <!-- nose -->
+      <circle id="nose" cx="250" cy="180" r="12" fill="#3a2b20"/>
+      <!-- mouth (changes for smile/sad) -->
+      <path id="mouth" d="M240 190 Q250 205 260 190" stroke="#4a2d1a" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <!-- chart -->
+      <rect x="150" y="230" width="200" height="80" rx="10" class="chart"/>
+      <text x="250" y="260" class="chart-text">UZAIR GAVE YOU</text>
+      <text x="250" y="285" class="chart-text">TEDDY 🧸</text>
+      <text x="250" y="310" class="chart-text">DO YOU LOVE HIM?</text>
+    </svg>
+
+    <!-- buttons -->
+    <div class="btns">
+      <button class="yes">YES ❤️</button>
+      <button class="no">NO 💔</button>
+    </div>
+
+    <div class="message" id="message"></div>
+  </div>
+
+<script>
+  const teddy = document.getElementById("teddy");
+  const yesBtn = document.querySelector(".yes");
+  const noBtn = document.querySelector(".no");
+  const msg = document.getElementById("message");
+  const container = document.querySelector(".container");
+  const mouth = document.getElementById("mouth");
+
+  noBtn.addEventListener("click", ()=>{
+    msg.textContent = "💔 Oh no! You broke Teddy's heart! To save him you must say YES.";
+    msg.style.opacity = 1;
+    // make teddy sad
+    mouth.setAttribute("d","M240 200 Q250 185 260 200");
+  });
+
+  yesBtn.addEventListener("click", ()=>{
+    msg.textContent = "";
+    teddy.classList.add("dance");
+    // make teddy smile
+    mouth.setAttribute("d","M240 190 Q250 215 260 190");
+
+    // add flower
+    let flower = document.createElement("div");
+    flower.className="flower";
+    flower.textContent="🌸";
+    container.appendChild(flower);
+
+    // add love text
+    let text = document.createElement("div");
+    text.className="love-text";
+    text.textContent="I LOVE JERU 💖";
+    container.appendChild(text);
+
+    setTimeout(()=> { flower.remove(); text.remove(); }, 4000);
+  });
+</script>
+</body>
+</html>
